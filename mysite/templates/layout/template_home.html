@@ -1,0 +1,21 @@
+{% include "layout/header.html" %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            {% block content %}
+                <p>content<p>
+            {% endblock %}
+        </div>
+        <div class="col-sm-4">
+            <div class="side-menu">
+                <a href="{% url 'mysite:index' %}"><div class"menu-item">List user</div></a>
+                <a href="{% url 'mysite:add' %}"><div class"menu-item">Add user</div></a>
+                <a href="{% url 'mysite:departments' %}"><div class"menu-item">List department</div></a>
+            </div>
+            <li><a>eeeeeeeeeeeeeeeeeeeeeeee</a></li>
+        </div>
+    </div>
+</div>
+
+{% include "layout/footer.html" %}

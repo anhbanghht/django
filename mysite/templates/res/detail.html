@@ -1,0 +1,50 @@
+{% extends "layout/template_home.html" %}
+
+{% block content %}
+    
+    {% load static %}
+    {% comment %} <link rel="stylesheet" href="{% static 'res/scss/style.scss' %}"> {% endcomment %}
+
+    <h1>detail user</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    {% if user %}
+        <form action="{% url 'mysite:edit' user.id %}" method="post">
+            {% csrf_token %}
+            {% comment %} <p>{{ user.user_name }}</p>
+            <p>{{ user.email }}</p> {% endcomment %}
+            <div class="mt-2">
+                <lable>User name</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.name %}<div class="text-danger ml-1">{{ error.name }}</div>{% endif %}
+                <input type="text" class="form-control" placeholder="Please input user name" name="name" value="{{ user.user_name }}" value="" />
+            </div>
+
+            <div class="mt-2">
+                <lable>Email</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.email %}<div class="text-danger ml-1">{{ error.email }}</div>{% endif %}
+                <input type="text" class="form-control" placeholder="Please input email" name="email" value="{{ user.email }}" value="" />
+            </div>
+
+            <div class="mt-2 date-time-picker">
+                <lable>Birthday</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.dateStart %}<div class="text-danger ml-1">{{ error.dateStart }}</div>{% endif %}
+                {{ datepicker.dateStart }}
+            </div>
+
+            <div class="mt-2">
+                <lable>Department</lable><span class="text-danger ml-1">(*)</span>
+                <select name="department" class="form-control">
+                    <option value="">select department</option>
+                    {% for department in departments %}
+                        <option id="department{{ forloop.counter }}" value="{{ department.id }}"
+                            {% if department.id == user.department %} selected="selected" {% endif %}>
+                            {{ department.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Edit</button>
+        </form>
+    {% endif %}
+{% endblock %}

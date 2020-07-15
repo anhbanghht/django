@@ -1,0 +1,67 @@
+{% extends "layout/template_home.html" %}
+
+{% block content %}
+    
+    {% load static %}
+    {% comment %} <link rel="stylesheet" href="{% static 'res/scss/style.scss' %}"> {% endcomment %}
+    <h1>list user</h1>
+
+    <form action="{% url 'mysite:index' %}" method="get">
+        {% csrf_token %}
+        <div class="row mt-2 align-items-end">
+            <div class="col-md-4">
+                <lable>UserName</span>
+                <input type="text" class="form-control" placeholder="Please input user name" name="userName"
+                    value="{{condition.userName}}" />
+            </div>
+            <div class="col-md-4">
+                <lable>Department</span>
+                    <select name="departmentId" class="form-control">
+                        <option value="0">Select department</option>
+                        {% for department in departments %}
+                            <option id="department{{ forloop.counter }}" value="{{ department.id }}"
+                                {% if department.id == condition.departmentId %} selected="selected" {% endif %}>
+                                {{ department.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success">Search</button>
+            </div>
+        </div>
+    </form>
+
+    {% comment %} <ul>
+        {% for user in listUser %}
+            <li><a href="{% url 'mysite:detail' user.id %}">{{ user.userName }}</a></li>
+        {% endfor %}
+    </ul> {% endcomment %}
+
+    {% if listUser %}
+        <table class="table table-bordered table-bordered table-hover table-striped mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Department</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in listUser %}
+                <tr data-href="{% url 'mysite:detail' user.id %}">
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{ user.userName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.department }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="mt-3">not found user</p>
+    {% endif %}
+    
+
+{% endblock %}

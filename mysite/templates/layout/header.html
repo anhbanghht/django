@@ -1,0 +1,20 @@
+{% load bootstrap4 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load static %}
+{% comment %} {% load sass_tags %} {% endcomment %}
+<link rel="stylesheet" href="{% static 'res/scss/style.scss' %}">
+
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% comment %} load file scss {% endcomment %}
+{% comment %} {% load compress %} {% endcomment %}
+
+<script src="{% static 'res/js/main.js' %}"></script>
+
+<p>header</p>

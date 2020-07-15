@@ -1,0 +1,50 @@
+{% extends "layout/template_home.html" %}
+
+{% block content %}
+    
+    {% comment %} {% load static %} {% endcomment %}
+    {% comment %} <script src="{% static 'res/js/add_user.js' %}"></script> {% endcomment %}
+
+    <h1>add user</h1>
+    <form action="{% url 'mysite:save' %}" method="post">
+        {% csrf_token %}
+        {# Adds date-picker required JS and CSS #}
+        {{ datepicker.media }}
+    
+
+        <div class="form-group">
+            <div class="mt-2">
+                <lable>User name</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.name %}<div class="text-danger ml-1">{{ error.name }}</div>{% endif %}
+                <input type="text" class="form-control" placeholder="Please input user name" name="name" value="{{ user.user_name }}" value="" />
+            </div>
+
+            <div class="mt-2">
+                <lable>Email</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.email %}<div class="text-danger ml-1">{{ error.email }}</div>{% endif %}
+                <input type="text" class="form-control" placeholder="Please input email" name="email" value="{{ user.email }}" value="" />
+            </div>
+
+            <div class="mt-2 date-time-picker">
+                <lable>Birthday</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.dateStart %}<div class="text-danger ml-1">{{ error.dateStart }}</div>{% endif %}
+                {{ datepicker.dateStart }}
+            </div>
+
+            <div class="mt-2">
+                <lable>Department</lable><span class="text-danger ml-1">(*)</span>
+                {% if error and error.department %}<div class="text-danger ml-1">{{ error.department }}</div>{% endif %}
+                <select name="department" class="form-control">
+                    <option value="">select department</option>
+                    {% for department in departments %}
+                        <option id="department{{ forloop.counter }}" value="{{ department.id }}"
+                            {% if department.id == user.department %} selected="selected" {% endif %}>
+                            {{ department.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Save</button>
+    </from>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout/template_home.html" %}
+
+{% block content %}
+    
+    {% load static %}
+    {% load compress %}
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'res/scss/department.scss' %}" rel="stylesheet" media="screen">
+    {% endcompress %}
+
+
+    <h1>list department</h1>
+
+    <div class="group-affiliation">
+        {% for department in departments %}
+            <div class="row mt-2">
+                <div class="col-md-2 group-affiliation-wrap">
+                    <div class="group-affiliation-item group-col-fl{{ department.level }}">
+                        <i class="fas fa-level-up-alt fa-rotate-90"></i>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Please input name department" name="name{{department.id}}"
+                        value="{{department.name}}" />
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Please input note departments" name="note{{department.id}}"
+                        value="{{department.note}}" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success">Edit</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
